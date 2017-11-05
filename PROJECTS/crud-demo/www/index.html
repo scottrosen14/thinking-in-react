@@ -1,0 +1,80 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MessageList</title>
+  <script src='jquery.js'></script>
+  <link rel="stylesheet" type="text/css" href="../assets/style.css">
+</head>
+
+<body>
+  <div id="myDIV" class="header">
+    <h2>Message List</h2>
+    <form>
+      <input type="text" id="messageInput" placeholder="Message...">
+      <span class="addBtn">Add</span>
+    </form>
+  </div>
+  <ul id = "messagesContainer"></ul>
+</body>
+
+<!-- <script src='./assets/index.js'></script> -->
+<script>
+   const dummyData = [
+    {_id: 11, message: 'paranoia', createdBy: 'is a problem'},
+    {_id: 12, message: 'the struggle', createdBy: 'is real'},
+    {_id: 13, message: 'dodgers are world series bound!', createdBy: 'actual life'}
+  ];
+
+  // -----Get request
+  // 1st param is route, 2nd is empty object, then callback func with data as param
+    // iterate and prepend new div to list with data[i]._id as the div id
+    // add a class message
+    // place the message and createdBy within the text
+    $.get('/api/getAllMessages', {}, function(data) {
+      for (let i = 0; i < data.length; i++) {
+        let msgInfo = data[i];
+        let msgBox = $('<li id=' + msgInfo._id + ' class=messageBox>' + msgInfo.message + ', ' + msgInfo.createdBy + '</li>');
+        $('#messagesContainer').prepend(msgBox);
+      }
+    });
+
+  // -----Post request
+  // when clicking the addBtn class, get the value of the messageInput
+    // invoke post request
+    // 1st param is the route, 2nd is an object with the message and createdBy
+    // when done, invoke callback
+    // prepend new div to list with data._id as the div id
+    // add class message
+    // place the message and createdBy as the text
+    function createMessage() {
+      let inputMsg = $('#messageInput').val();
+      let splitArr = inputMsg.split(', ');
+      $.post('/api/createMessage', {
+        message: splitArr[0],
+        createdBy: splitArr[1]
+      }, function(data) {
+        let msgBox = $('<li id=' + data._id + ' class=messageBox>' + data.message + ', ' + data.createdBy + '</li>');
+        $('#messagesContainer').prepend(msgBox);
+      });
+    }
+    $('.addBtn').click(createMessage);
+
+  // -----Deleting a message
+  // when clicking on a message, get var msgDelete = this.text() to remove that message
+    // invoke post request
+    // 1st param = route, 2nd is object with {message: msgDelete}
+    // .done(invoke callback, and console.log('Deleted!'))
+    // $(this).remove() outside of done()
+    function deleteMessage() {
+      let msgDelete = $(this).text();
+      let splitArr = msgDelete.split(', ');
+      $.post('/api/deleteMessage/',
+        {createdBy: splitArr[1]},
+        function(data) {
+          console.log('Deleted--', data)
+        });
+      $(this).remove();
+    }
+    $(document).on('click', '.messageBox', deleteMessage);
+</script>
+</html>
