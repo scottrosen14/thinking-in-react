@@ -12,24 +12,22 @@ class App extends Component {
     };
   }
 
-  // onChange = (e) => {
-  //   let stateNew = Object.assign({}, this.state);
-  //   stateNew.current = e.target.value;
-  //   this.setState(stateNew);
-  //   console.log('state', this.state)
-  // }
+  handleChange = (e) => {
+    this.setState({current: e.target.value})
+    console.log('state', this.state)
+  }
 
   addItem = (e) => {
-    let itemArray = this.state.items;
-    if (this._inputElement.value !== "") {
+    // make copy of items array
+    let itemArray = this.state.items.slice();
+    if (this.state.current !== "") {
       itemArray.unshift({
-        text: this._inputElement.value
+        text: this.state.current
       });
       this.setState({
         items: itemArray
       })
-
-      this._inputElement.value = "";
+      e.target.value = "";
     }
     console.log(itemArray);
     e.preventDefault();
@@ -41,8 +39,7 @@ class App extends Component {
         <div className="header">
           <h1>To Do List</h1>
           <form onSubmit={this.addItem}>
-            <input className="enterItem" ref={ (a) => this._inputElement = a }
-             placeholder="enter task" />
+            <input type="text" onChange={ this.handleChange } placeholder="enter task" />
             <input className="addBtn" type="submit" value="Add Item"/>
           </form>
         </div>
