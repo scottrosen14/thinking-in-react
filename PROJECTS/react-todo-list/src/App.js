@@ -3,6 +3,13 @@ import './App.css';
 // import Header from './Header';
 import List from './List';
 
+// TodoApp
+//   -TodoHeader
+//   -List
+//     -Item
+//     -Item
+
+
 class App extends Component {
   constructor() {
     super()
@@ -13,27 +20,41 @@ class App extends Component {
   }
 
   handleChange = (e) => {
+    // every time you press a key the state will reset
     this.setState({current: e.target.value})
-    console.log('state', this.state)
+    // console.log('state', this.state)
   }
 
   addItem = (e) => {
+    e.preventDefault();
     // make copy of items array
-    let itemArray = this.state.items.slice();
+    let itemsCopy = this.state.items.slice();
     if (this.state.current !== "") {
-      itemArray.unshift({
-        text: this.state.current
+      // add to beginning of copied array
+      itemsCopy.unshift({
+        index: itemsCopy.length,
+        text: this.state.current,
+        isDone: false
       });
       this.setState({
-        items: itemArray
+        items: itemsCopy
       })
-      e.target.value = "";
+      console.log('state', this.state)
     }
-    console.log(itemArray);
-    e.preventDefault();
+  }
+
+  deleteItem = (index) => {
+    console.log('function firing')
+    let itemsCopy = this.state.items.slice();
+    let itemsFiltered = itemsCopy.filter(function(item, i) {
+      return i !== index;
+    })
+    console.log('filtered', itemsFiltered)
+    this.setState(itemsFiltered)
   }
 
   render() {
+    const { state, deleteItem, handleChange } = this;
     return (
       <div className="App">
         <div className="header">
@@ -43,7 +64,7 @@ class App extends Component {
             <input className="addBtn" type="submit" value="Add Item"/>
           </form>
         </div>
-        <List entries={ this.state.items } />
+        <List state={ state } items={ state.items } deleteItem= {this.deleteItem} />
       </div>
     );
   }
