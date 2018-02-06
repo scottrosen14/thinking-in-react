@@ -39,32 +39,34 @@ class App extends Component {
       this.setState({
         items: itemsCopy
       })
-      console.log('state', this.state)
+      // console.log('state', this.state)
     }
   }
 
   deleteItem = (index) => {
-    console.log('function firing')
-    let itemsCopy = this.state.items.slice();
+    const {state} = this;
+    // copy the state where items is backwards
+    // 3, 2, 1, 0
+    let itemsCopy = state.items.slice();
+    // iterate forward
     let itemsFiltered = itemsCopy.filter(function(item, i) {
       return i !== index;
     })
-    console.log('filtered', itemsFiltered)
-    this.setState(itemsFiltered)
+    this.setState({items: itemsFiltered})
   }
 
   render() {
-    const { state, deleteItem, handleChange } = this;
+    const { state, addItem, deleteItem, handleChange } = this;
     return (
       <div className="App">
         <div className="header">
           <h1>To Do List</h1>
-          <form onSubmit={this.addItem}>
-            <input type="text" onChange={ this.handleChange } placeholder="enter task" />
+          <form onSubmit={addItem}>
+            <input type="text" onChange={handleChange} placeholder="enter task" />
             <input className="addBtn" type="submit" value="Add Item"/>
           </form>
         </div>
-        <List state={ state } items={ state.items } deleteItem= {this.deleteItem} />
+        <List state={state} items={state.items} deleteItem= {deleteItem} />
       </div>
     );
   }

@@ -6,7 +6,7 @@ class Item extends Component {
   }
   onClickClose = () => {
     const { index } = this.props;
-    console.log('props', this.props)
+    // console.log('props', this.props)
     this.props.deleteItem(index);
   }
   onClickDone = () => {
@@ -14,11 +14,11 @@ class Item extends Component {
     this.props.markDone(index);
   }
   render () {
-    const { items, index } = this.props;
-    console.log('items', items)
+    const { state, index } = this.props;
+    // console.log('items', items)
     return (
       <li>
-        {items[index].text}
+        {state.items[index].text}
         <span className="close" onClick={ this.onClickClose }>
         X
         </span>

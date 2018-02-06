@@ -8,9 +8,9 @@ class List extends Component {
 
   createTasks = (item, i) => {
     const { state, deleteItem } = this.props;
-    console.log('List state', state);
+    // console.log('List state', state);
     return (
-      <Item state={state} key={i} items={state.items} item={item} index={i} deleteItem={ deleteItem } />
+      <Item state={state} key={i} item={item} index={i} deleteItem={ deleteItem } />
     )
   }
 
@@ -19,8 +19,11 @@ class List extends Component {
     // pull down props
     // iterate through this.props.items and add the items to itemNodes
     // place itemNodes within the ul
-    const { state, items } = this.props;
-    const itemNodes = items.slice().map(this.createTasks);
+    const { state } = this.props;
+    // iterate forward and assign index
+    // console.log('state items', state.items)
+    const itemNodes = state.items.slice().map(this.createTasks);
+    // console.log('Nodes', itemNodes)
 
     return (
       <ul className="list">
