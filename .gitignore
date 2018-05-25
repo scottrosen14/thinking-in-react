@@ -29,22 +29,11 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-<<<<<<< HEAD
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-=======
-# Compiled binary addons (https://nodejs.org/api/addons.html)
->>>>>>> 1030b4490694df75177d3933c98bd46622807320
-build/Release
-
 # Dependency directories
 node_modules/
 jspm_packages/
 
-<<<<<<< HEAD
-# Typescript v1 declaration files
-=======
 # TypeScript v1 declaration files
->>>>>>> 1030b4490694df75177d3933c98bd46622807320
 typings/
 
 # Optional npm cache directory
@@ -65,8 +54,7 @@ typings/
 # dotenv environment variables file
 .env
 
-<<<<<<< HEAD
-=======
 # next.js build output
 .next
->>>>>>> 1030b4490694df75177d3933c98bd46622807320
+
+package-lock.json
