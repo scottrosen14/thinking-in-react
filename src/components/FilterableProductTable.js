@@ -30,7 +30,7 @@ class FilterableProductTable extends React.Component {
     const { handleFilterText, handleInStockChange } = this;
 
     return (
-      <div>
+      <div className="filterableProductTable">
         <SearchBar
           filterText={filterText}
           inStockOnly={inStockOnly}

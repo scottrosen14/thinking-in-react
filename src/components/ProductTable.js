@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductCategoryRow from './ProductCategoryRow'
 import ProductRow from './ProductRow'
+import TotalRow from './TotalRow'
 
 class ProductTable extends React.Component {
   render() {
@@ -51,6 +52,7 @@ class ProductTable extends React.Component {
       lastCategory = product.category;
     })
 
+    console.log('rows', rows[1].props.product)
     return (
       <table>
         <thead>
@@ -59,7 +61,10 @@ class ProductTable extends React.Component {
             <th>Price</th>
           </tr>
         </thead>
-        <tbody>{ rows }</tbody>
+        <tbody>
+          { rows }
+          <TotalRow visibleRows={rows} />
+        </tbody>
       </table>
     )
   }

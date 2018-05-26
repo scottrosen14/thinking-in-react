@@ -5,7 +5,7 @@ class SearchBar extends React.Component {
   const { handleFilterText, handleInStockChange } = this.props;
 
     return (
-      <div>
+      <form>
         <input
           type="text"
           placeholder="Search..."
@@ -16,7 +16,7 @@ class SearchBar extends React.Component {
           onChange={() => handleInStockChange()} />
           Only show products in stock
         <br/>
-      </div>
+      </form>
     )
   }
 }
